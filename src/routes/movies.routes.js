@@ -5,12 +5,15 @@ const router = express.Router()
 const MoviesController = require('../controllers/moviesController')
 const moviesController = new MoviesController()
 
+// middlewares
+const upload = require('../middlewares/multer')
+
 router.get('/', moviesController.index)
 router.get('/:id', moviesController.show)
 
-router.post('/', moviesController.create)
+router.post('/', upload.single('file'), moviesController.create)
 
-router.put('/:id', moviesController.update)
+router.put('/:id', upload.single('file'), moviesController.update)
 
 router.delete('/:id', moviesController.delete)
 
